@@ -4,8 +4,6 @@ module.exports = function countSameElements(collection) {
     var this_array=to_array(collection)
     return to_sum(this_array)
     
-    
-    
     function to_array(collection){
         var new_arr=[];
         for(var i =0;i<collection.length;i++){
@@ -18,9 +16,7 @@ module.exports = function countSameElements(collection) {
                 new_arr.push({key:collection[i],count:parseInt(1)});
                 }
             }
-//        console.log(new_arr);
-        return new_arr;
-        
+        return new_arr;   
     }
     
     function to_sum(collection){
@@ -39,9 +35,6 @@ module.exports = function countSameElements(collection) {
         }
         console.log(newarr)
         return newarr;
-    }
-
-
-    
+    }    
     
 }
