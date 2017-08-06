@@ -1,40 +1,69 @@
 'use strict';
+function split(item){
+//      let {key,value};
+      
+      if(item.includes('-')){
+            let splited = item.split('-')
+//            console.log({key:splited[0],value:parseInt(splited[1],10)})
+            return {key:splited[0],value:parseInt(splited[1],10)}
+      }
+      if(item.includes(':')){
+            let splited = item.split(':')
+//            console.log({key:splited[0],value:parseInt(splited[1],10)})
+            return {key:splited[0],value:parseInt(splited[1],10)}
+      }
+      if(item.includes('[')){
+            let key = item.charAt(0);
+            let value = parseInt(item.substr(2,item.length-1));
+//            console.log({key,value})
+            return {key,value}
+      }
+}
+
+function push(result,key,value){
+      for(let i = 0;i<value;i++){
+            result.push(key);
+      }
+}
+
+function expand(collection){
+      var result = [];
+      for(let item of collection){
+            if (item.length ==1){
+                  result.push(item)
+            }else{
+                  let {key,value} = split(item)
+                  push(result,key,value)
+            }
+      }
+      console.log(result);
+      return result;
+}
+
+function summarize(collection){
+      let new_arr=[];
+      for(let i of collection){
+            var obj = find(new_arr,i);
+            if(obj){
+                  obj.summary++;
+            }else{
+                  new_arr.push({name:i,summary:1})
+            }
+      }
+      return new_arr;
+}
+
+function find(collection,i){
+      for(let item of collection){
+            if(i==item.name){
+                  return item
+            }
+      }
+      return false;
+}
 
 module.exports = function countSameElements(collection) {
-    var this_array=to_array(collection)
-    return to_sum(this_array)
-    
-    function to_array(collection){
-        var new_arr=[];
-        for(var i =0;i<collection.length;i++){
-            if (collection[i].length>1) {
-    	       var this_value = parseInt(collection[i].match(/\d{1,2}/g),10);
-    	       var this_key = collection[i].replace(/[^a-z]/ig,"");
-    	       console.log(this_value);
-        	   new_arr.push({key:this_key,count:this_value});
-    	    }else{
-                new_arr.push({key:collection[i],count:parseInt(1)});
-                }
-            }
-        return new_arr;   
-    }
-    
-    function to_sum(collection){
-        var newarr=[];    
-        for(var i=0;i<collection.length;){
-            var this_count=0;   
-            var count=0;
-            for(var j=i;j<collection.length;j++){
-                if (collection[i]['key']==collection[j]['key']){
-                    this_count+=1;
-                    count+=parseInt(collection[j]['count'],10)
-                }
-            }
-            newarr.push({name:collection[i]['key'],summary:count})
-            i+=this_count;        
-        }
-        console.log(newarr)
-        return newarr;
-    }    
-    
+    let expanded = expand(collection)
+    console.log(summarize(expanded))
+    return summarize(expanded)  
 }
