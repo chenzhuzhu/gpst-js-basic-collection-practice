@@ -1,13 +1,23 @@
 'use strict';
+function includes(collection,item){
+      for(let each_value of collection){
+            if(each_value == item){
+                  return true
+            }
+      }
+      return false
+}
 
 module.exports = function createUpdatedCollection(collectionA, objectB) {
-  for(var i=0;i<collectionA.length;i++){
-      for(var j=0;j<objectB.value.length;j++){
-          if(collectionA[i].key == objectB.value[j]){
-              collectionA[i].count = collectionA[i].count-parseInt(collectionA[i].count/3);
-          }
-          
+      let new_arr=[];
+      for(let objA of collectionA){
+            let key=objA.key;
+            let count =objA.count;
+            if(includes(objectB.value,key)){
+                  count =count - Math.floor(count/3);  
+            }
+            new_arr.push({key,count});
       }
-  }
-  return collectionA;
+      console.log(new_arr);
+      return new_arr;
 }

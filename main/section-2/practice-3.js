@@ -36,7 +36,6 @@ function expand(collection){
                   push(result,key,value)
             }
       }
-      console.log(result);
       return result;
 }
 
