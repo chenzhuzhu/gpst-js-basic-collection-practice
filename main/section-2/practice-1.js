@@ -1,16 +1,23 @@
 'use strict';
+function find(item,newarr){
+      for(let each_item of newarr){
+            if(item == each_item.key){
+                  return each_item;
+            }         
+      }
+      return false;
+}
+
 
 module.exports = function countSameElements(collection) {
-    var newarr=[];    
-    for(var i=0;i<collection.length;){
-        var this_count=0;   
-        for(var j=i;j<collection.length;j++){
-            if (collection[i]==collection[j]){
-                this_count+=1;
-            }
-        }
-        newarr.push({key:collection[i],count:this_count})
-        i+=this_count;        
+    let newarr=[];    
+    for(let item of collection){
+          let this_obj =find(item,newarr);
+          if(this_obj){
+                this_obj.count++;
+          }else{
+                newarr.push({key:item,count:1});
+          }
     }
-    return newarr;
+    return newarr
 }
